@@ -1,5 +1,6 @@
 import os.path
 import unittest
+from distutils.version import LooseVersion
 from unittest import TestCase
 
 import run
@@ -11,7 +12,7 @@ class TestPackageFilesExistence(TestCase):
         "src/user.py"
     ]
 
-    @unittest.skipIf(run.__version__ == "0.0.0", "demonstrating skipping")
+    @unittest.skipIf(LooseVersion(run.__version__) < LooseVersion("0.0.0"), "demonstrating skipping")
     def test_main_files(self):
         for file_name in self.list_of_exam_packages_files:
             if not os.path.exists(file_name):

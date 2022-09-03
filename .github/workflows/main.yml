@@ -1,0 +1,24 @@
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8.5
+          
+      - name: Install Package Requirements
+        run: pip install -r requirements.txt
+        if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+        
+      - name: Install Build Requirements
+        run: pip install coverage
+        if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+        
+      - name: Unit Tests
+        run: coverage run -m unittest tests/*; coverage xml

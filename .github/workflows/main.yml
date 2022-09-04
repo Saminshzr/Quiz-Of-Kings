@@ -21,4 +21,4 @@ jobs:
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
         
       - name: Unit Tests
-        run: coverage run -m unittest tests/*; coverage xml
+        run: coverage run -m pytest tests/*; coverage xml
